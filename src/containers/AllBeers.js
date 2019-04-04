@@ -35,7 +35,6 @@ const styles = (theme) => ({
   },
   cardText: {
     color: 'white',
-    // marginBottom: 0,
   },
 });
 

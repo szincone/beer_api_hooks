@@ -56,7 +56,11 @@ function App({ classes }) {
     };
     const beersCopy = beers.slice();
     beersCopy.unshift(newBeer);
+    console.log('BEER COPY', beersCopy);
     setBeers(beersCopy);
+    console.log('BEER After', beers);
+    // setNewBeerLikes('');
+    // setNewBeerName('');
   };
   // end form methods
 
