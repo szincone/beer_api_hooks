@@ -3,9 +3,12 @@ import { Route } from 'react-router-dom';
 import axios from 'axios';
 import BeerCard from './containers/BeerCard';
 import AllBeers from './containers/AllBeers';
+import AddNewBeer from './containers/AddNewBeer';
 
 export default function App() {
   const [beers, setBeers] = useState([]);
+  const [newBeerName, setNewBeerName] = useState('');
+  const [newBeerLikes, setNewBeerLikes] = useState(0);
 
   const fetchBeers = async () => {
     const response = await axios.get(
@@ -15,10 +18,34 @@ export default function App() {
     setBeers(response.data);
   };
 
-  // this useEffect hook acts like componentDidMount,
+  // this useEffect hook acts like componentDidMount
   useEffect(() => {
     fetchBeers();
   }, []);
+
+  // form methods
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+    if (name === 'likes') {
+      setNewBeerLikes(value);
+    } else {
+      setNewBeerName(value);
+    }
+  };
+
+  const addNewBeer = (event) => {
+    event.preventDefault();
+    const newId = beers[0].id + 1;
+    console.log('NEWID', newId);
+    const newBeer = {
+      id: newId,
+      name: newBeerName,
+      likes: newBeerLikes,
+    };
+    const beersCopy = beers.slice();
+    beersCopy.unshift(newBeer);
+    setBeers(beersCopy);
+  };
 
   const likeHandler = (event, curBeer) => {
     let newLikes = curBeer.likes;
@@ -32,7 +59,7 @@ export default function App() {
       name: curBeer.name,
       likes: newLikes,
     };
-    let beersCopy = beers.slice();
+    const beersCopy = beers.slice();
     beersCopy.forEach((beer) => {
       if (beer.id === newBeer.id) {
         beer.likes = newBeer.likes;
@@ -51,6 +78,19 @@ export default function App() {
         path="/beers/:id"
         render={(props) => (
           <BeerCard {...props} beers={beers} likeHandler={likeHandler} />
+        )}
+      />
+      <Route
+        path="/add_new_beer"
+        render={(props) => (
+          <AddNewBeer
+            {...props}
+            beers={beers}
+            inputChangeHandler={inputChangeHandler}
+            newBeerName={newBeerName}
+            addNewBeer={addNewBeer}
+            newBeerLikes={newBeerLikes}
+          />
         )}
       />
     </div>
