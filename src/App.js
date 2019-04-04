@@ -14,7 +14,6 @@ export default function App() {
     const response = await axios.get(
       'https://cors-anywhere.herokuapp.com/https://beer.fluentcloud.com/v1/beer',
     );
-    console.log('RES DATA', response);
     setBeers(response.data);
   };
 
@@ -36,7 +35,6 @@ export default function App() {
   const addNewBeer = (event) => {
     event.preventDefault();
     const newId = beers[0].id + 1;
-    console.log('NEWID', newId);
     const newBeer = {
       id: newId,
       name: newBeerName,
@@ -46,6 +44,7 @@ export default function App() {
     beersCopy.unshift(newBeer);
     setBeers(beersCopy);
   };
+  // end form methods
 
   const likeHandler = (event, curBeer) => {
     let newLikes = curBeer.likes;
@@ -68,7 +67,17 @@ export default function App() {
     setBeers(beersCopy);
   };
   return (
-    <div style={{ maxWidth: '800px', width: '100%' }}>
+    <div
+      style={{
+        maxWidth: '800px',
+        background: '#3891A6',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: '1rem auto',
+      }}
+    >
       <Route
         exact
         path="/"

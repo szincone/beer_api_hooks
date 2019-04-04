@@ -4,19 +4,26 @@ import { Link } from 'react-router-dom';
 export default function AllBeers(props) {
   return (
     <>
+      <h1 style={{ color: 'white' }}>
+        World of Beer{' '}
+        <span role="img" aria-label="beer">
+          🍺
+        </span>
+      </h1>
       <Link to="/add_new_beer">
         <button
           value="addNew"
           style={{
-            background: 'red',
+            background: '#DB5461',
             fontWeight: 'bold',
-            border: 'none',
+            color: 'white',
             borderRadius: '4px',
             cursor: 'pointer',
             padding: '.25rem .5rem',
+            border: '2px solid white',
           }}
         >
-          Add New
+          Add New Beer
         </button>
       </Link>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -25,15 +32,18 @@ export default function AllBeers(props) {
           .map((beer) => (
             <Link
               to={`/beers/${beer.id}`}
-              style={{ textDecoration: 'none', color: 'white' }}
+              style={{ textDecoration: 'none', color: 'black' }}
               key={beer.id}
             >
               <div
                 style={{
-                  background: 'red',
+                  background: '#DB5461',
+                  color: 'white',
                   margin: '1rem',
                   textAlign: 'center',
                   padding: '1rem',
+                  border: '2px solid white',
+                  borderRadius: '4px',
                 }}
               >
                 <h1>
