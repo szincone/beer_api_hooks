@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
+import { Grid, withStyles } from '@material-ui/core';
 import BeerCard from './containers/BeerCard';
 import AllBeers from './containers/AllBeers';
 import AddNewBeer from './containers/AddNewBeer';
 
-export default function App() {
+const styles = (theme) => ({
+  appContainer: {
+    maxWidth: '800px',
+    background: '#3891A6',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: '1rem auto',
+  },
+  containerWidth: { maxWidth: '800px' },
+});
+
+function App({ classes }) {
   const [beers, setBeers] = useState([]);
   const [newBeerName, setNewBeerName] = useState('');
   const [newBeerLikes, setNewBeerLikes] = useState(0);
@@ -67,17 +81,7 @@ export default function App() {
     setBeers(beersCopy);
   };
   return (
-    <div
-      style={{
-        maxWidth: '800px',
-        background: '#3891A6',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        margin: '1rem auto',
-      }}
-    >
+    <Grid className={classes.appContainer}>
       <Route
         exact
         path="/"
@@ -102,6 +106,8 @@ export default function App() {
           />
         )}
       />
-    </div>
+    </Grid>
   );
 }
+
+export default withStyles(styles)(App);
