@@ -9,6 +9,20 @@ export default function BeerCard(props) {
     <>
       <h1>{beer.name}</h1>
       <h1>{beer.likes}</h1>
+      <div>
+        <button
+          onClick={(event) => props.likeHandler(event, beer)}
+          value="increase"
+        >
+          +
+        </button>
+        <button
+          onClick={(event) => props.likeHandler(event, beer)}
+          value="decrease"
+        >
+          -
+        </button>
+      </div>
       <Link to="/">
         <button>Home</button>
       </Link>

@@ -20,6 +20,26 @@ export default function App() {
     fetchBeers();
   }, []);
 
+  const likeHandler = (event, curBeer) => {
+    let newLikes = curBeer.likes;
+    if (event.target.value === 'increase') {
+      newLikes += 1;
+    } else if (event.target.value === 'decrease') {
+      newLikes -= 1;
+    }
+    const newBeer = {
+      id: curBeer.id,
+      name: curBeer.name,
+      likes: newLikes,
+    };
+    let beersCopy = beers.slice();
+    beersCopy.forEach((beer) => {
+      if (beer.id === newBeer.id) {
+        beer.likes = newBeer.likes;
+      }
+    });
+    setBeers(beersCopy);
+  };
   return (
     <div style={{ maxWidth: '800px', width: '100%' }}>
       <Route
@@ -29,7 +49,9 @@ export default function App() {
       />
       <Route
         path="/beers/:id"
-        render={(props) => <BeerCard {...props} beers={beers} />}
+        render={(props) => (
+          <BeerCard {...props} beers={beers} likeHandler={likeHandler} />
+        )}
       />
     </div>
   );
