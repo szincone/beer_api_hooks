@@ -4,38 +4,41 @@ import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
   cardText: {
-    color: '#ffffff',
+    color: theme.palette.secondary.main,
     padding: '.5rem',
   },
   cardTitle: {
-    color: '#ffffff',
+    color: theme.palette.secondary.main,
     padding: '.5rem',
     fontWeight: 'bold',
   },
   singleCardContainer: {
-    background: '#DB5461',
-    color: 'white',
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
     margin: '1rem',
     textAlign: 'center',
-    border: '2px solid white',
+    border: `2px solid ${theme.palette.secondary.main}`,
     borderRadius: '4px',
   },
   buttonStyles: {
-    background: '#3891A6',
-    border: '2px solid white',
+    background: theme.palette.secondary.main,
+    border: `2px solid ${theme.palette.secondary.main}`,
     fontWeight: 'bold',
-    color: 'white',
+    color: theme.palette.primary.main,
     minHeight: '4rem',
     minWidth: '330px',
     borderRadius: '4px',
     cursor: 'pointer',
     marginTop: 0,
     padding: '2px',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
   },
   operationButtons: {
-    background: '#FDE74C',
-    border: '2px solid white',
-    color: '#000000',
+    background: theme.palette.primary.contrastText,
+    border: `2px solid ${theme.palette.secondary.main}`,
+    color: theme.palette.primary.main,
     fontWeight: 'bold',
     fontSize: '2rem',
     minHeight: '4rem',
@@ -44,6 +47,9 @@ const styles = (theme) => ({
     margin: '1rem',
     cursor: 'pointer',
     marginTop: 0,
+  },
+  '&:hover': {
+    color: theme.palette.primary.contrastText,
   },
 });
 

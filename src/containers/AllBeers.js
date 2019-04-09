@@ -4,25 +4,28 @@ import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
   title: {
-    color: 'white',
+    color: theme.palette.secondary.main,
     marginBottom: '.5rem',
   },
   addNewButton: {
-    background: '#DB5461',
+    background: theme.palette.secondary.main,
     fontWeight: 'bold',
-    color: 'white',
+    color: theme.palette.primary.main,
     borderRadius: '4px',
     cursor: 'pointer',
     padding: '.25rem .5rem',
-    border: '2px solid white',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
   },
   singleCard: {
-    background: '#DB5461',
-    color: 'white',
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
     margin: '1rem',
     textAlign: 'center',
     padding: '.5rem',
-    border: '2px solid white',
+    border: `2px solid ${theme.palette.secondary.main}`,
     borderRadius: '4px',
     display: 'flex',
     flexDirection: 'column',
@@ -34,7 +37,7 @@ const styles = (theme) => ({
     flexWrap: 'wrap',
   },
   cardText: {
-    color: 'white',
+    color: theme.palette.secondary.main,
   },
 });
 
@@ -42,7 +45,7 @@ function AllBeers(props) {
   const { classes } = props;
   return (
     <>
-      <Typography variant="h2" className={classes.title}>
+      <Typography variant="h3" className={classes.title}>
         World of Beer{' '}
         <span role="img" aria-label="beer">
           🍺
@@ -63,12 +66,12 @@ function AllBeers(props) {
               key={beer.id}
             >
               <Grid className={classes.singleCard}>
-                <Typography variant="h4" className={classes.cardText}>
+                <Typography variant="h5" className={classes.cardText}>
                   {beer.name.length > 10
                     ? beer.name.substring(0, 10) + '...'
                     : beer.name}
                 </Typography>
-                <Typography variant="h4" className={classes.cardText}>
+                <Typography variant="h5" className={classes.cardText}>
                   {beer.likes}
                 </Typography>
               </Grid>

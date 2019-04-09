@@ -16,16 +16,16 @@ const styles = (theme) => ({
   },
   inputText: {
     margin: 0,
-    color: 'white',
+    color: theme.palette.secondary.main,
   },
   centerGrid: {
     textAlign: 'center',
   },
   buttonStyle: {
-    background: '#FDE74C',
+    background: theme.palette.primary.contrastText,
     fontWeight: 'bold',
-    color: '#4C5B5C',
-    border: '2px solid white',
+    color: theme.palette.secondary.main,
+    border: `2px solid ${theme.palette.secondary.main}`,
     borderRadius: '4px',
     cursor: 'pointer',
     padding: '.25rem .75rem',
@@ -33,18 +33,21 @@ const styles = (theme) => ({
     minWidth: '330px',
   },
   homeButtonStyle: {
-    background: '#FFFFFF',
+    background: theme.palette.secondary.main,
     fontWeight: 'bold',
-    color: '#4C5B5C',
-    border: '2px solid white',
+    color: theme.palette.primary.main,
+    border: `2px solid ${theme.palette.secondary.main}`,
     borderRadius: '4px',
     cursor: 'pointer',
     padding: '.25rem .75rem',
     margin: '0 auto',
     minWidth: '330px',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
   },
   inputStyle: {
-    background: '#ffffff',
+    background: theme.palette.secondary.main,
     borderRadius: '4px',
   },
   linkDec: {
@@ -53,8 +56,8 @@ const styles = (theme) => ({
   formGroup: {
     textAlign: 'center',
     marginBottom: '1rem',
-    background: '#DB5461',
-    border: '2px solid white',
+    background: theme.palette.secondary.contrastText,
+    border: `2px solid ${theme.palette.secondary.main}`,
     borderRadius: '4px',
     display: 'flex',
     flexDirection: 'column',
