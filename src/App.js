@@ -61,25 +61,26 @@ function App({ classes }) {
   };
   // end form methods
 
-  const likeHandler = (event, curBeer) => {
+  const likeHandler = async (event, curBeer) => {
     let newLikes = curBeer.likes;
     if (event.target.value === 'increase') {
       newLikes += 1;
     } else if (event.target.value === 'decrease') {
       newLikes -= 1;
     }
-    const newBeer = {
-      id: curBeer.id,
-      name: curBeer.name,
+    const modifiedLikes = {
       likes: newLikes,
     };
-    const beersCopy = beers.slice();
-    beersCopy.forEach((beer) => {
-      if (beer.id === newBeer.id) {
-        beer.likes = newBeer.likes;
-      }
-    });
-    setBeers(beersCopy);
+    await axios.put(
+      `https://cors-anywhere.herokuapp.com/https://beer.fluentcloud.com/v1/beer/${
+        curBeer.id
+      }`,
+      modifiedLikes,
+    );
+    const response = await axios.get(
+      'https://cors-anywhere.herokuapp.com/https://beer.fluentcloud.com/v1/beer',
+    );
+    setBeers(response.data);
   };
 
   return (
