@@ -5,7 +5,8 @@ import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 const styles = (theme) => ({
   title: {
     color: theme.palette.secondary.main,
-    marginBottom: '.5rem',
+    marginBottom: '.75rem',
+    textAlign: 'center',
   },
   addNewButton: {
     background: theme.palette.secondary.main,
@@ -14,6 +15,7 @@ const styles = (theme) => ({
     borderRadius: '4px',
     cursor: 'pointer',
     padding: '.25rem .5rem',
+    marginBottom: '.5rem',
     border: `2px solid ${theme.palette.secondary.main}`,
     '&:hover': {
       color: theme.palette.secondary.main,
@@ -22,7 +24,7 @@ const styles = (theme) => ({
   singleCard: {
     background: theme.palette.secondary.contrastText,
     color: theme.palette.secondary.main,
-    margin: '1rem',
+    margin: '.5rem',
     textAlign: 'center',
     padding: '.5rem',
     border: `2px solid ${theme.palette.secondary.main}`,
@@ -31,10 +33,16 @@ const styles = (theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     height: '150px',
+    minWidth: '240px',
+    maxWidth: '241px',
+    '&:hover': {
+      background: theme.palette.secondary.contrastTextLight,
+    },
   },
   cardContainer: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   cardText: {
     color: theme.palette.secondary.main,
@@ -66,12 +74,13 @@ function AllBeers(props) {
               key={beer.id}
             >
               <Grid className={classes.singleCard}>
-                <Typography variant="h5" className={classes.cardText}>
+                <Typography variant="h6" className={classes.cardText}>
                   {beer.name.length > 10
-                    ? beer.name.substring(0, 10) + '...'
+                    ? beer.name.substring(0, 9) + '...'
                     : beer.name}
                 </Typography>
-                <Typography variant="h5" className={classes.cardText}>
+                <Typography variant="h6" className={classes.cardText}>
+                  <span style={{ fontStyle: 'italic' }}>likes: </span>
                   {beer.likes}
                 </Typography>
               </Grid>

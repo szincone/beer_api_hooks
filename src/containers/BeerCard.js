@@ -11,6 +11,7 @@ const styles = (theme) => ({
     color: theme.palette.secondary.main,
     padding: '.5rem',
     fontWeight: 'bold',
+    borderBottom: `2px solid ${theme.palette.secondary.main}`,
   },
   singleCardContainer: {
     background: theme.palette.secondary.contrastText,
@@ -22,34 +23,37 @@ const styles = (theme) => ({
   },
   buttonStyles: {
     background: theme.palette.secondary.main,
-    border: `2px solid ${theme.palette.secondary.main}`,
+    borderRadius: '0 0 4px 4px',
+    borderTop: `2px solid ${theme.palette.secondary.main}`,
     fontWeight: 'bold',
     color: theme.palette.primary.main,
     minHeight: '4rem',
     minWidth: '330px',
-    borderRadius: '4px',
     cursor: 'pointer',
     marginTop: 0,
     padding: '2px',
     '&:hover': {
       color: theme.palette.secondary.main,
+      background: theme.palette.primary.main,
     },
   },
   operationButtons: {
     background: theme.palette.primary.contrastText,
     border: `2px solid ${theme.palette.secondary.main}`,
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontWeight: 'bold',
     fontSize: '2rem',
-    minHeight: '4rem',
-    width: '4rem',
+    height: '4.5rem',
+    width: '5.5rem',
     borderRadius: '4px',
     margin: '1rem',
     cursor: 'pointer',
     marginTop: 0,
-  },
-  '&:hover': {
-    color: theme.palette.primary.contrastText,
+    '&:hover': {
+      color: theme.palette.primary.contrastText,
+      background: theme.palette.secondary.main,
+      border: `2px solid ${theme.palette.primary.contrastText}`,
+    },
   },
 });
 
