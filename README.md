@@ -9,3 +9,6 @@ Front-end web application built using React, Hooks, and Material-UI.
 - React
 - Hooks
 - Material-UI
+
+## author
+- Sawyer Zincone -_intial work_- [szincone](https://github.com/szincone)
