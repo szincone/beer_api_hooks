@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter as Router } from 'react-router-dom';
+import theme from './theme';
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <MuiThemeProvider theme={theme}>
+    <CssBaseline />
+    <Router>
+      <App />
+    </Router>
+    ,
+  </MuiThemeProvider>,
   document.getElementById('root'),
 );
 
