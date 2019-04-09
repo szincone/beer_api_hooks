@@ -47,6 +47,7 @@ const styles = (theme) => ({
     padding: '.25rem .75rem',
     margin: '0 auto',
     minWidth: '330px',
+    width: '100%',
     '&:hover': {
       color: theme.palette.secondary.main,
     },

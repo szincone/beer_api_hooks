@@ -29,6 +29,7 @@ const styles = (theme) => ({
     color: theme.palette.primary.main,
     minHeight: '4rem',
     minWidth: '330px',
+    width: '100%',
     cursor: 'pointer',
     marginTop: 0,
     padding: '2px',
