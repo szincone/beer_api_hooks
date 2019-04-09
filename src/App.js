@@ -9,7 +9,7 @@ import AddNewBeer from './containers/AddNewBeer';
 const styles = (theme) => ({
   appContainer: {
     maxWidth: '800px',
-    background: '#3891A6',
+    background: theme.palette.primary.main,
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -63,9 +63,9 @@ function App({ classes }) {
 
   const likeHandler = async (event, curBeer) => {
     let newLikes = curBeer.likes;
-    if (event.target.value === 'increase') {
+    if (event.target.innerText === '+') {
       newLikes += 1;
-    } else if (event.target.value === 'decrease') {
+    } else if (event.target.innerText === '-') {
       newLikes -= 1;
     }
     const modifiedLikes = {
