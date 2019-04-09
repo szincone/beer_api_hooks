@@ -7,23 +7,27 @@ const styles = (theme) => ({
     color: '#ffffff',
     padding: '.5rem',
   },
+  cardTitle: {
+    color: '#ffffff',
+    padding: '.5rem',
+    fontWeight: 'bold',
+  },
   singleCardContainer: {
     background: '#DB5461',
     color: 'white',
     margin: '1rem',
     textAlign: 'center',
-    padding: '1rem',
     border: '2px solid white',
     borderRadius: '4px',
   },
   buttonStyles: {
     background: '#3891A6',
     border: '2px solid white',
+    fontWeight: 'bold',
     color: 'white',
-    height: '2rem',
-    width: '2rem',
+    minHeight: '4rem',
+    minWidth: '330px',
     borderRadius: '4px',
-    margin: '1rem',
     cursor: 'pointer',
     marginTop: 0,
     padding: '2px',
@@ -32,8 +36,10 @@ const styles = (theme) => ({
     background: '#FDE74C',
     border: '2px solid white',
     color: '#000000',
-    height: '2rem',
-    width: '2rem',
+    fontWeight: 'bold',
+    fontSize: '2rem',
+    minHeight: '4rem',
+    width: '4rem',
     borderRadius: '4px',
     margin: '1rem',
     cursor: 'pointer',
@@ -48,27 +54,27 @@ function BeerCard(props) {
   )[0];
   return (
     <Grid className={classes.singleCardContainer}>
-      <Typography variant="h4" className={classes.cardText}>
+      <Typography variant="h5" className={classes.cardTitle}>
         {beer.name}
       </Typography>
-      <Typography variant="h4" className={classes.cardText}>
-        {beer.likes}
+      <Typography variant="h5" className={classes.cardText}>
+        Current likes: {beer.likes}
       </Typography>
       <Grid>
-        <button
+        <Button
           onClick={(event) => props.likeHandler(event, beer)}
           value="increase"
           className={classes.operationButtons}
         >
           +
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={(event) => props.likeHandler(event, beer)}
           value="decrease"
           className={classes.operationButtons}
         >
           -
-        </button>
+        </Button>
       </Grid>
       <Link to="/" style={{ textDecoration: 'none' }}>
         <Button className={classes.buttonStyles}>Home</Button>
