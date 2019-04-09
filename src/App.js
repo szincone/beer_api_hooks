@@ -46,17 +46,16 @@ function App({ classes }) {
     }
   };
 
-  const addNewBeer = (event) => {
+  const addNewBeer = async (event) => {
     event.preventDefault();
-    const newId = beers[0].id + 1;
     const newBeer = {
-      id: newId,
       name: newBeerName,
       likes: newBeerLikes,
     };
-    const beersCopy = beers.slice();
-    beersCopy.unshift(newBeer);
-    setBeers(beersCopy);
+    await axios.post(
+      'https://cors-anywhere.herokuapp.com/https://beer.fluentcloud.com/v1/beer',
+      newBeer,
+    );
     setNewBeerLikes('');
     setNewBeerName('');
   };
@@ -82,6 +81,7 @@ function App({ classes }) {
     });
     setBeers(beersCopy);
   };
+
   return (
     <Grid className={classes.appContainer}>
       <Route
