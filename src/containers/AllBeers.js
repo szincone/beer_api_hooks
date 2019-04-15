@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
   Typography,
   withStyles,
@@ -100,7 +97,6 @@ const styles = (theme) => ({
   cancelDialogButton: {
     background: theme.palette.secondary.contrastText,
     color: theme.palette.secondary.main,
-    border: `2px solid ${theme.palette.secondary.main}`,
     fontWeight: 'bold',
     '&:hover': {
       background: theme.palette.secondary.contrastTextLight,
@@ -110,7 +106,6 @@ const styles = (theme) => ({
   deleteDialogButton: {
     marginLeft: '5px',
     background: theme.palette.primary.contrastText,
-    border: `2px solid ${theme.palette.secondary.main}`,
     color: theme.palette.secondary.textColor,
     fontWeight: 'bold',
     '&:hover': {
@@ -123,7 +118,16 @@ const styles = (theme) => ({
 function AllBeers(props) {
   const { classes } = props;
   const [dialogBool, setDialogBool] = useState(false);
-  const handleDialog = () => {
+  const [currentBeer, setCurrentBeer] = useState('');
+  const handleDialog = (curBeer) => {
+    if (curBeer) {
+      setCurrentBeer(curBeer.id);
+    }
+    setDialogBool(!dialogBool);
+  };
+  const useDeleteHandler = () => {
+    props.deleteHandler(currentBeer);
+    setCurrentBeer('');
     setDialogBool(!dialogBool);
   };
   return (
@@ -132,28 +136,18 @@ function AllBeers(props) {
       <Dialog
         open={dialogBool}
         onClose={handleDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="delete"
+        aria-describedby="confirmation"
       >
         <DialogContent className={classes.dialogTitle}>
           Are you sure you want to delete the beer?
         </DialogContent>
-        {/* <DialogContent className={classes.dialogTextContainer}>
-          <DialogContentText className={classes.dialogText}>
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent> */}
         <DialogContent className={classes.dialogActions}>
-          <Button
-            onClick={handleDialog}
-            className={classes.cancelDialogButton}
-            color="secondary"
-          >
+          <Button onClick={handleDialog} className={classes.cancelDialogButton}>
             Cancel
           </Button>
           <Button
-            onClick={handleDialog}
+            onClick={useDeleteHandler}
             className={classes.deleteDialogButton}
             autoFocus
           >
@@ -195,7 +189,10 @@ function AllBeers(props) {
                   </Typography>
                 </Grid>
               </Link>
-              <Button className={classes.deleteButton} onClick={handleDialog}>
+              <Button
+                className={classes.deleteButton}
+                onClick={() => handleDialog(beer)}
+              >
                 Delete
               </Button>
             </Grid>
