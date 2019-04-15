@@ -21,6 +21,11 @@ const styles = (theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  singleCardWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   singleCard: {
     background: theme.palette.secondary.contrastText,
     color: theme.palette.secondary.main,
@@ -28,13 +33,16 @@ const styles = (theme) => ({
     textAlign: 'center',
     padding: '.5rem',
     border: `2px solid ${theme.palette.secondary.main}`,
-    borderRadius: '4px',
+    borderRadius: '4px 4px 0 0',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     height: '150px',
     minWidth: '240px',
     maxWidth: '241px',
+    // connects delete w/ main card
+    marginBottom: '0',
+    borderBottom: 'none',
     '&:hover': {
       background: theme.palette.secondary.contrastTextLight,
     },
@@ -43,6 +51,20 @@ const styles = (theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+  },
+  deleteButton: {
+    background: theme.palette.primary.contrastText,
+    marginBottom: '.5rem',
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    minWidth: '240px',
+    maxWidth: '241px',
+    borderRadius: '0 0 4px 4px',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    '&:hover': {
+      background: theme.palette.primary.contrastTextLight,
+      color: theme.palette.secondary.main,
+    },
   },
   cardText: {
     color: theme.palette.secondary.main,
@@ -68,23 +90,26 @@ function AllBeers(props) {
         {props.beers
           .filter((beer) => beer.name !== '')
           .map((beer) => (
-            <Link
-              to={`/beers/${beer.id}`}
-              style={{ textDecoration: 'none', color: 'black' }}
-              key={beer.id}
-            >
-              <Grid className={classes.singleCard}>
-                <Typography variant="h6" className={classes.cardText}>
-                  {beer.name.length > 10
-                    ? beer.name.substring(0, 9) + '...'
-                    : beer.name}
-                </Typography>
-                <Typography variant="h6" className={classes.cardText}>
-                  <span style={{ fontStyle: 'italic' }}>likes: </span>
-                  {beer.likes}
-                </Typography>
-              </Grid>
-            </Link>
+            <Grid className={classes.singleCardWrapper}>
+              <Link
+                to={`/beers/${beer.id}`}
+                style={{ textDecoration: 'none', color: 'black' }}
+                key={beer.id}
+              >
+                <Grid className={classes.singleCard}>
+                  <Typography variant="h6" className={classes.cardText}>
+                    {beer.name.length > 10
+                      ? beer.name.substring(0, 9) + '...'
+                      : beer.name}
+                  </Typography>
+                  <Typography variant="h6" className={classes.cardText}>
+                    <span style={{ fontStyle: 'italic' }}>likes: </span>
+                    {beer.likes}
+                  </Typography>
+                </Grid>
+              </Link>
+              <Button className={classes.deleteButton}>Delete</Button>
+            </Grid>
           ))}
       </Grid>
     </>
