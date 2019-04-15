@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Typography, withStyles } from '@material-ui/core';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  Typography,
+  withStyles,
+} from '@material-ui/core';
 
 const styles = (theme) => ({
   title: {
@@ -69,12 +79,89 @@ const styles = (theme) => ({
   cardText: {
     color: theme.palette.secondary.main,
   },
+  dialogTitle: {
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
+    fontSize: '1.75rem',
+    fontWeight: 'bold',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderBottom: 'none',
+  },
+  dialogActions: {
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    fontSize: '1.75rem',
+    fontWeight: 'bold',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderTop: 'none',
+  },
+  cancelDialogButton: {
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
+    border: `2px solid ${theme.palette.secondary.main}`,
+    fontWeight: 'bold',
+    '&:hover': {
+      background: theme.palette.secondary.contrastTextLight,
+      color: theme.palette.secondary.main,
+    },
+  },
+  deleteDialogButton: {
+    marginLeft: '5px',
+    background: theme.palette.primary.contrastText,
+    border: `2px solid ${theme.palette.secondary.main}`,
+    color: theme.palette.secondary.textColor,
+    fontWeight: 'bold',
+    '&:hover': {
+      background: theme.palette.primary.contrastTextLight,
+      color: theme.palette.secondary.main,
+    },
+  },
 });
 
 function AllBeers(props) {
   const { classes } = props;
+  const [dialogBool, setDialogBool] = useState(false);
+  const handleDialog = () => {
+    setDialogBool(!dialogBool);
+  };
   return (
     <>
+      {/* delete modal */}
+      <Dialog
+        open={dialogBool}
+        onClose={handleDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent className={classes.dialogTitle}>
+          Are you sure you want to delete the beer?
+        </DialogContent>
+        {/* <DialogContent className={classes.dialogTextContainer}>
+          <DialogContentText className={classes.dialogText}>
+            Let Google help apps determine location. This means sending
+            anonymous location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent> */}
+        <DialogContent className={classes.dialogActions}>
+          <Button
+            onClick={handleDialog}
+            className={classes.cancelDialogButton}
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDialog}
+            className={classes.deleteDialogButton}
+            autoFocus
+          >
+            Delete
+          </Button>
+        </DialogContent>
+      </Dialog>
+      {/* end delete modal */}
       <Typography variant="h3" className={classes.title}>
         World of Beer{' '}
         <span role="img" aria-label="beer">
@@ -108,7 +195,9 @@ function AllBeers(props) {
                   </Typography>
                 </Grid>
               </Link>
-              <Button className={classes.deleteButton}>Delete</Button>
+              <Button className={classes.deleteButton} onClick={handleDialog}>
+                Delete
+              </Button>
             </Grid>
           ))}
       </Grid>
