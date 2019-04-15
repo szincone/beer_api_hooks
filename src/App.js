@@ -58,9 +58,14 @@ function App({ classes }) {
     );
     setNewBeerLikes('');
     setNewBeerName('');
+    const response = await axios.get(
+      'https://cors-anywhere.herokuapp.com/https://beer.fluentcloud.com/v1/beer',
+    );
+    setBeers(response.data);
   };
   // end form methods
 
+  // PUT
   const likeHandler = async (event, curBeer) => {
     let newLikes = curBeer.likes;
     if (event.target.innerText === '+') {
@@ -83,12 +88,25 @@ function App({ classes }) {
     setBeers(response.data);
   };
 
+  // DELETE
+  const deleteHandler = async (curBeerId) => {
+    await axios.delete(
+      `https://cors-anywhere.herokuapp.com/https://beer.fluentcloud.com/v1/beer/${curBeerId}`,
+    );
+    const response = await axios.get(
+      'https://cors-anywhere.herokuapp.com/https://beer.fluentcloud.com/v1/beer',
+    );
+    setBeers(response.data);
+  };
+
   return (
     <Grid className={classes.appContainer}>
       <Route
         exact
         path="/"
-        render={(props) => <AllBeers {...props} beers={beers} />}
+        render={(props) => (
+          <AllBeers {...props} beers={beers} deleteHandler={deleteHandler} />
+        )}
       />
       <Route
         path="/beers/:id"
