@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Typography, withStyles } from '@material-ui/core';
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  Grid,
+  Typography,
+  withStyles,
+} from '@material-ui/core';
 
 const styles = (theme) => ({
   title: {
@@ -21,6 +28,11 @@ const styles = (theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  singleCardWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   singleCard: {
     background: theme.palette.secondary.contrastText,
     color: theme.palette.secondary.main,
@@ -28,13 +40,16 @@ const styles = (theme) => ({
     textAlign: 'center',
     padding: '.5rem',
     border: `2px solid ${theme.palette.secondary.main}`,
-    borderRadius: '4px',
+    borderRadius: '4px 4px 0 0',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     height: '150px',
     minWidth: '240px',
     maxWidth: '241px',
+    // connects delete w/ main card
+    marginBottom: '0',
+    borderBottom: 'none',
     '&:hover': {
       background: theme.palette.secondary.contrastTextLight,
     },
@@ -44,15 +59,103 @@ const styles = (theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
+  deleteButton: {
+    background: theme.palette.primary.contrastText,
+    marginBottom: '.5rem',
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    minWidth: '240px',
+    maxWidth: '241px',
+    borderRadius: '0 0 4px 4px',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    '&:hover': {
+      background: theme.palette.primary.contrastTextLight,
+      color: theme.palette.secondary.main,
+    },
+  },
   cardText: {
     color: theme.palette.secondary.main,
+  },
+  dialogTitle: {
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
+    fontSize: '1.75rem',
+    fontWeight: 'bold',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderBottom: 'none',
+  },
+  dialogActions: {
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    fontSize: '1.75rem',
+    fontWeight: 'bold',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderTop: 'none',
+  },
+  cancelDialogButton: {
+    background: theme.palette.secondary.contrastText,
+    color: theme.palette.secondary.main,
+    fontWeight: 'bold',
+    '&:hover': {
+      background: theme.palette.secondary.contrastTextLight,
+      color: theme.palette.secondary.main,
+    },
+  },
+  deleteDialogButton: {
+    marginLeft: '5px',
+    background: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.textColor,
+    fontWeight: 'bold',
+    '&:hover': {
+      background: theme.palette.primary.contrastTextLight,
+      color: theme.palette.secondary.main,
+    },
   },
 });
 
 function AllBeers(props) {
   const { classes } = props;
+  const [dialogBool, setDialogBool] = useState(false);
+  const [currentBeer, setCurrentBeer] = useState('');
+  const handleDialog = (curBeer) => {
+    if (curBeer) {
+      setCurrentBeer(curBeer.id);
+    }
+    setDialogBool(!dialogBool);
+  };
+  const useDeleteHandler = () => {
+    props.deleteHandler(currentBeer);
+    setCurrentBeer('');
+    setDialogBool(!dialogBool);
+  };
   return (
     <>
+      {/* delete modal */}
+      <Dialog
+        open={dialogBool}
+        onClose={handleDialog}
+        aria-labelledby="delete"
+        aria-describedby="confirmation"
+      >
+        <DialogContent className={classes.dialogTitle}>
+          Are you sure you want to delete the beer?
+        </DialogContent>
+        <DialogContent className={classes.dialogActions}>
+          <Button onClick={handleDialog} className={classes.cancelDialogButton}>
+            Cancel
+          </Button>
+          <Button
+            onClick={useDeleteHandler}
+            className={classes.deleteDialogButton}
+            autoFocus
+          >
+            Delete
+          </Button>
+        </DialogContent>
+      </Dialog>
+      {/* end delete modal */}
       <Typography variant="h3" className={classes.title}>
         World of Beer{' '}
         <span role="img" aria-label="beer">
@@ -68,23 +171,31 @@ function AllBeers(props) {
         {props.beers
           .filter((beer) => beer.name !== '')
           .map((beer) => (
-            <Link
-              to={`/beers/${beer.id}`}
-              style={{ textDecoration: 'none', color: 'black' }}
-              key={beer.id}
-            >
-              <Grid className={classes.singleCard}>
-                <Typography variant="h6" className={classes.cardText}>
-                  {beer.name.length > 10
-                    ? beer.name.substring(0, 9) + '...'
-                    : beer.name}
-                </Typography>
-                <Typography variant="h6" className={classes.cardText}>
-                  <span style={{ fontStyle: 'italic' }}>likes: </span>
-                  {beer.likes}
-                </Typography>
-              </Grid>
-            </Link>
+            <Grid className={classes.singleCardWrapper}>
+              <Link
+                to={`/beers/${beer.id}`}
+                style={{ textDecoration: 'none', color: 'black' }}
+                key={beer.id}
+              >
+                <Grid className={classes.singleCard}>
+                  <Typography variant="h6" className={classes.cardText}>
+                    {beer.name.length > 10
+                      ? beer.name.substring(0, 9) + '...'
+                      : beer.name}
+                  </Typography>
+                  <Typography variant="h6" className={classes.cardText}>
+                    <span style={{ fontStyle: 'italic' }}>likes: </span>
+                    {beer.likes}
+                  </Typography>
+                </Grid>
+              </Link>
+              <Button
+                className={classes.deleteButton}
+                onClick={() => handleDialog(beer)}
+              >
+                Delete
+              </Button>
+            </Grid>
           ))}
       </Grid>
     </>
