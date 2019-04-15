@@ -17,6 +17,7 @@ export default createMuiTheme({
     },
     secondary: {
       main: '#FFFFFF',
+      textColor: '#000000', // used for delete button text
       contrastText: '#276FBF', // cool blue
       contrastTextLight: '#4E89CA', // lighter shade for hover
     },
